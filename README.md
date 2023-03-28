@@ -2,7 +2,7 @@
   
 # Installation
 [![NuGet](https://img.shields.io/nuget/v/Narumikazuchi.Generators.TaggedUnions.svg)](https://www.nuget.org/packages/Narumikazuchi.Generators.TaggedUnions)  
-The installation can be simply done via installing the nuget package or by downloading the latest release here from github and referencing it in your project.
+The installation can be simply done via installing the nuget package.
 
 # Introduction
 Sometimes we want to handle more than one type at the same time. Maybe we want to return either a ```String``` or an ```Int32``` from a method depending on the input. However unlike Typescript whe Union-Types are a feature of the language, in C# we don't have such a feature.
