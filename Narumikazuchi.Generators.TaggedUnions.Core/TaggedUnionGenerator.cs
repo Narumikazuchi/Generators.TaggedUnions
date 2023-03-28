@@ -282,5 +282,5 @@ public readonly struct {name}
     private readonly Dictionary<String, (String name, SourceText source)> m_Cache = new();
     private readonly List<__TaggedUnionParameters> m_TaggedUnions = new();
 
-    internal const String UNION_ATTRIBUTE_FULLNAME = "Narumikazuchi.TypeExtensions.UnionOfAttribute";
+    internal const String UNION_ATTRIBUTE_FULLNAME = "Narumikazuchi.Generators.TaggedUnions.UnionOfAttribute";
 }
