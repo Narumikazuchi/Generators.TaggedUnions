@@ -70,8 +70,7 @@ public sealed partial class TaggedUnionGenerator
         return attributes.ToArray();
     }
 
-    static private SourceText GenerateStruct(SourceProductionContext context,
-                                             String name,
+    static private SourceText GenerateStruct(String name,
                                              HashSet<ITypeSymbol> types)
     {
         Stopwatch watch = Stopwatch.StartNew();
@@ -266,8 +265,7 @@ public readonly struct {name}
 
         if (emit)
         {
-            source = GenerateStruct(context: context,
-                                    name: name,
+            source = GenerateStruct(name: name,
                                     types: types);
             m_Cache.Add(key: data.ToString(),
                         value: (name, source));

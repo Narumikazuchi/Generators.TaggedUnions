@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Narumikazuchi.Generators.TaggedUnions</name>
+    </assembly>
+    <members>
+        <member name="T:Narumikazuchi.Generators.TaggedUnions.NotInitialized">
+            <summary>
+            The exception that is thrown when trying to use the value of an uninitialized union.
+            </summary>
+        </member>
+        <member name="M:Narumikazuchi.Generators.TaggedUnions.NotInitialized.#ctor">
+            <summary>
+            The exception that is thrown when trying to use the value of an uninitialized union.
+            </summary>
+        </member>
+        <member name="M:Narumikazuchi.Generators.TaggedUnions.NotInitialized.#ctor(System.String)">
+            <summary>
+            The exception that is thrown when trying to use the value of an uninitialized union.
+            </summary>
+        </member>
+        <member name="T:Narumikazuchi.Generators.TaggedUnions.UnionOfAttribute">
+            <summary>
+            Generates a tagged union of the specified types.
+            </summary>
+        </member>
+        <member name="M:Narumikazuchi.Generators.TaggedUnions.UnionOfAttribute.#ctor(System.Type,System.Type,System.Type[])">
+            <summary>
+            Generates a tagged union of the specified types.
+            </summary>
+        </member>
+        <member name="P:Narumikazuchi.Generators.TaggedUnions.UnionOfAttribute.Typename">
+            <summary>
+            The name to use for the generated type.
+            </summary>
+        </member>
+    </members>
+</doc>
