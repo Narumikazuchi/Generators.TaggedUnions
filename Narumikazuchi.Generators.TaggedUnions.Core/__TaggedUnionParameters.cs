@@ -1,6 +1,6 @@
-﻿using Narumikazuchi.TypeExtensions.Analyzers;
+﻿using Narumikazuchi.Generators.TaggedUnions.Analyzers;
 
-namespace Narumikazuchi.TypeExtensions;
+namespace Narumikazuchi.Generators.TaggedUnions;
 
 internal record struct __TaggedUnionParameters(AttributeSyntax? Syntax, String Typename, HashSet<ITypeSymbol> Types)
 {

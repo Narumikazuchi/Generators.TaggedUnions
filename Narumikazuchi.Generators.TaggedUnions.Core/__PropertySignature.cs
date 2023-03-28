@@ -1,6 +1,5 @@
-﻿namespace Narumikazuchi.TypeExtensions;
+﻿namespace Narumikazuchi.Generators.TaggedUnions;
 
-[System.Diagnostics.DebuggerDisplay("{ToSignatureString()}")]
 internal readonly struct __PropertySignature : __ISignature, IEquatable<__ISignature>
 {
     public readonly override Boolean Equals(Object obj)

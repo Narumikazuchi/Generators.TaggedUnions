@@ -1,4 +1,4 @@
-﻿namespace Narumikazuchi.TypeExtensions;
+﻿namespace Narumikazuchi.Generators.TaggedUnions;
 
 internal interface __ISignature
 {
