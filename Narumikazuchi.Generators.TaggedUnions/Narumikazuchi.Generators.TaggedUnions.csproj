@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<PlatformTarget>x64</PlatformTarget>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<WarningsNotAsErrors>1591</WarningsNotAsErrors>
+		<NoWarn>NU1803;1701;1702,0282</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\Narumikazuchi.Generators.TaggedUnions.Core\bin\Release\netstandard2.0\Narumikazuchi.Generators.TaggedUnions.Core.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<DocumentationFile>Narumikazuchi.Generators.TaggedUnions.xml</DocumentationFile>
+		<Authors>Narumikazuchi</Authors>
+		<Copyright>©2023 Narumikazuchi</Copyright>
+		<Version>2023.03.28.7-prerelease</Version>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<RepositoryUrl>https://github.com/Narumikazuchi/Generators.TaggedUnions</RepositoryUrl>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageReleaseNotes></PackageReleaseNotes>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<NoPackageAnalysis>true</NoPackageAnalysis>
+		<PackageProjectUrl>https://github.com/Narumikazuchi/Generators.TaggedUnions/wiki</PackageProjectUrl>
+		<PackageIcon>logo.png</PackageIcon>
+		<PackageTags>Type Extensions</PackageTags>
+		<PackageReadmeFile>README nuget.md</PackageReadmeFile>
+		<Description>A detailed overview of the contents and their used can be found in the [wiki](https://github.com/Narumikazuchi/Generators.TaggedUnions/wiki).</Description>
+		<PackageId>Narumikazuchi.Generators.TaggedUnions</PackageId>
+		<Title>Narumikazuchi.Generators.TaggedUnions</Title>
+		<AssemblyName>Narumikazuchi.Generators.TaggedUnions</AssemblyName>
+		<RootNamespace>Narumikazuchi.Generators.TaggedUnions</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\README nuget.md">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="System" />
+	</ItemGroup>
+
+</Project>
