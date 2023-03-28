@@ -135,7 +135,7 @@ public sealed partial class TaggedUnionGenerator
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace Narumikazuchi.TypeExtensions.Generated;
+namespace Narumikazuchi.Generated;
 
 /// <summary>
 /// A type that can be assigned either of these types: <code>{String.Join(" | ", types.Select(x => $"<see cref=\"{x.ToDisplayString().Replace('<', '{').Replace('>', '}')}\"/>"))}</code>

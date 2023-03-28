@@ -110,7 +110,7 @@ public partial class TaggedUnionGenerator
             }
 
             builder.AppendLine($"            default:");
-            builder.AppendLine($"                throw new NotInitialized();");
+            builder.AppendLine($"                throw new Narumikazuchi.Generators.TaggedUnions.NotInitialized();");
 
             builder.AppendLine("        };");
         }
@@ -125,7 +125,7 @@ public partial class TaggedUnionGenerator
                 builder.AppendLine($"            Tag.Tag_{index} => m_{index}.{member.ToCallString()},");
             }
 
-            builder.AppendLine("            _ => throw new NotInitialized()");
+            builder.AppendLine("            _ => throw new Narumikazuchi.Generators.TaggedUnions.NotInitialized()");
             builder.AppendLine("        };");
         }
 
@@ -176,7 +176,7 @@ public partial class TaggedUnionGenerator
                 builder.AppendLine($"            Tag.Tag_{index} => m_{index}{member.ToCallString()},");
             }
 
-            builder.AppendLine("                _ => throw new NotInitialized()");
+            builder.AppendLine("                _ => throw new Narumikazuchi.Generators.TaggedUnions.NotInitialized()");
             builder.AppendLine("            };");
             builder.AppendLine("        }");
         }
@@ -197,7 +197,7 @@ public partial class TaggedUnionGenerator
             }
 
             builder.AppendLine($"            default:");
-            builder.AppendLine($"                throw new NotInitialized();");
+            builder.AppendLine($"                throw new Narumikazuchi.Generators.TaggedUnions.NotInitialized();");
             builder.AppendLine("            }");
             builder.AppendLine("        }");
         }
