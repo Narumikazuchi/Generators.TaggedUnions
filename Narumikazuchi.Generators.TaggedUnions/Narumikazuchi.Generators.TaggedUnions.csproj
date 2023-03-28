@@ -13,7 +13,20 @@
 		<NoWarn>NU1803;1701;1702,0282</NoWarn>
 	</PropertyGroup>
 
-	<ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<WarningsNotAsErrors>1591;1701;1702;0282;0169;0649;0414;0162</WarningsNotAsErrors>
+		<NoWarn>NU1803;CS8785</NoWarn>
+	</PropertyGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)Solution.sln&quot; /Build $(Configuration) /Project &quot;$(SolutionDir)Narumikazuchi.Generators.TaggedUnions.Core\Narumikazuchi.Generators.TaggedUnions.Core.csproj&quot;" />
+	</Target>
+
+	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<None Include="..\Narumikazuchi.Generators.TaggedUnions.Core\bin\Debug\netstandard2.0\Narumikazuchi.Generators.TaggedUnions.Core.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<None Include="..\Narumikazuchi.Generators.TaggedUnions.Core\bin\Release\netstandard2.0\Narumikazuchi.Generators.TaggedUnions.Core.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
 

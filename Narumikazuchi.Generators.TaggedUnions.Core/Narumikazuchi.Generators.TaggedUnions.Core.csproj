@@ -27,6 +27,11 @@
 		<NoWarn>NU1803;1701;1702,0282</NoWarn>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<WarningsNotAsErrors>1591;1701;1702;0282;0169;0649;0414;0162</WarningsNotAsErrors>
+		<NoWarn>NU1803;CS8785</NoWarn>
+	</PropertyGroup>
+
 	<PropertyGroup>
 		<Authors>Narumikazuchi</Authors>
 		<Copyright>©2023 Narumikazuchi</Copyright>
