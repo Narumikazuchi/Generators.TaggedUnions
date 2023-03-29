@@ -31,8 +31,14 @@ public sealed partial class TaggedUnionGenerator
         if (symbol is IMethodSymbol method)
         {
             if (method.MethodKind is not MethodKind.Ordinary ||
+                (method.Name.StartsWith(nameof(Equals)) &&
+                method.Parameters.Length == 1 &&
+                method.Parameters[0].Type.Name is "Object") ||
                 method.Name.StartsWith(nameof(MemberwiseClone)) ||
-                method.Name.StartsWith(nameof(GetType)))
+                method.Name.StartsWith(nameof(GetHashCode)) ||
+                method.Name.StartsWith(nameof(GetType)) ||
+                (method.Name.StartsWith(nameof(ToString)) &&
+                method.Parameters.Length == 0))
             {
                 return false;
             }
@@ -107,7 +113,13 @@ public sealed partial class TaggedUnionGenerator
             }
         }
 
-        __ISignature[] commonMembers = members.ToArray();
+        __ISignature[] commonMembers = members.Concat(new __ISignature[]
+        {
+            __MethodSignature.ObjectEquals,
+            __MethodSignature.ObjectGetHashCode,
+            __MethodSignature.ObjectToString
+        }).OrderBy(signature => signature, new __SignatureComparer())
+          .ToArray();
 
         String operators = GenerateOperators(name: name,
                                              types: types);

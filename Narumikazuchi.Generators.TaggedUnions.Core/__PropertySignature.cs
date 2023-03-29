@@ -43,16 +43,16 @@ internal readonly struct __PropertySignature : __ISignature, IEquatable<__ISigna
         }
     }
 
-    public ImmutableArray<IParameterSymbol> Parameters { get; }
+    public String Name { get; }
 
     internal __PropertySignature(IPropertySymbol property)
     {
         m_Call = new(() => GenerateCallString(property));
         m_Signature = new(() => GenerateSignatureString(property));
         m_SignatureWithNames = new(() => GenerateSignatureString(property, true));
-        this.Parameters = property.Parameters;
         this.CanRead = property.IsReadOnly || !property.IsWriteOnly;
         this.CanWrite = property.IsWriteOnly || !property.IsReadOnly;
+        this.Name = property.Name;
     }
 
     internal Boolean CanRead { get; }

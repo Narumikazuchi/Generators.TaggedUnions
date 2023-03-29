@@ -33,26 +33,33 @@ internal record struct __TaggedUnionParameters(AttributeSyntax? Syntax, String T
                                                                               index: 1));
         }
 
-        if (data.ConstructorArguments.Length > 2 &&
-            !data.ConstructorArguments[2].IsNull)
+        if (data.ConstructorArguments.Length > 2)
         {
             Int32 index = 2;
-            foreach (TypedConstant type in data.ConstructorArguments[2].Values)
+            if (data.ConstructorArguments[2].IsNull)
             {
-                if (type.IsNull)
+                diagnostics.Add(TaggedUnionAnalyzer.CreateTypeIsNullDiagnostic(attribute: syntax,
+                                                                               index: index));
+            }
+            else
+            {
+                foreach (TypedConstant type in data.ConstructorArguments[2].Values)
                 {
-                    diagnostics.Add(TaggedUnionAnalyzer.CreateTypeIsNullDiagnostic(attribute: syntax,
-                                                                                   index: index));
-                    continue;
-                }
+                    if (type.IsNull)
+                    {
+                        diagnostics.Add(TaggedUnionAnalyzer.CreateTypeIsNullDiagnostic(attribute: syntax,
+                                                                                       index: index));
+                        continue;
+                    }
 
-                if (!types.Add((ITypeSymbol)type.Value!))
-                {
-                    diagnostics.Add(TaggedUnionAnalyzer.CreateDuplicateTypeDiagnostic(attribute: syntax,
-                                                                                      index: index));
-                }
+                    if (!types.Add((ITypeSymbol)type.Value!))
+                    {
+                        diagnostics.Add(TaggedUnionAnalyzer.CreateDuplicateTypeDiagnostic(attribute: syntax,
+                                                                                          index: index));
+                    }
 
-                index++;
+                    index++;
+                }
             }
         }
 

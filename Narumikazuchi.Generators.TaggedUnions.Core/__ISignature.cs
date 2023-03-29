@@ -6,5 +6,5 @@ internal interface __ISignature
 
     public String ToSignatureString(Boolean includeParameterNames = default);
 
-    public ImmutableArray<IParameterSymbol> Parameters { get; }
+    public String Name { get; }
 }

@@ -14,6 +14,11 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
                    .GetHashCode();
     }
 
+    public readonly override String ToString()
+    {
+        return m_Signature.Value;
+    }
+
     public readonly Boolean Equals(__ISignature? other)
     {
         if (other is null)
@@ -43,7 +48,43 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
         }
     }
 
-    public ImmutableArray<IParameterSymbol> Parameters { get; }
+    static public __MethodSignature ObjectEquals
+    {
+        get
+        {
+            return new(name: "Equals",
+                       call: "Equals(obj)",
+                       signature: "bool Equals(object?)",
+                       signatureWithNames: "bool Equals(object? obj)",
+                       returnsVoid: false);
+        }
+    }
+
+    static public __MethodSignature ObjectGetHashCode
+    {
+        get
+        {
+            return new(name: "GetHashCode",
+                       call: "GetHashCode()",
+                       signature: "int GetHashCode()",
+                       signatureWithNames: "int GetHashCode()",
+                       returnsVoid: false);
+        }
+    }
+
+    static public __MethodSignature ObjectToString
+    {
+        get
+        {
+            return new(name: "ToString",
+                       call: "ToString()",
+                       signature: "string ToString()",
+                       signatureWithNames: "string ToString()",
+                       returnsVoid: false);
+        }
+    }
+
+    public String Name { get; }
 
     public Boolean ReturnsVoid { get; }
 
@@ -54,34 +95,30 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
         m_Call = new(() => GenerateCallString(method));
         m_Signature = new(() => GenerateSignatureString(method));
         m_SignatureWithNames = new(() => GenerateSignatureString(method, true));
-        this.Parameters = method.Parameters;
         this.ReturnsVoid = method.ReturnsVoid;
-        if (method.Name.StartsWith(nameof(Equals)) &&
-            method.Parameters.Length == 1 &&
-            method.Parameters[0].Type.ToDisplayString() is "object?")
-        {
-            this.IsVirtual = true;
-        }
-        else if (method.Name.StartsWith(nameof(GetHashCode)) &&
-                 method.Parameters.Length == 0)
-        {
-            this.IsVirtual = true;
-        }
-        else if (method.Name.StartsWith(nameof(ToString)) &&
-                 method.Parameters.Length == 0)
-        {
-            this.IsVirtual = true;
-        }
-        else
-        {
-            this.IsVirtual = false;
-        }
+        this.IsVirtual = false;
+        this.Name = method.Name;
+    }
+
+    private __MethodSignature(String name,
+                              String call,
+                              String signature,
+                              String signatureWithNames,
+                              Boolean returnsVoid)
+    {
+
+        m_Call = new(() => call);
+        m_Signature = new(() => signature);
+        m_SignatureWithNames = new(() => signatureWithNames);
+        this.ReturnsVoid = returnsVoid;
+        this.IsVirtual = true;
+        this.Name = name;
     }
 
     static private String GenerateCallString(IMethodSymbol method)
     {
         String parameters = String.Join(", ", method.Parameters.Select(TransformParameterForCall));
-        return $"{method.Name}({parameters})".Replace("?", "");
+        return $"{method.Name}({parameters})";
     }
 
     static private String GenerateSignatureString(IMethodSymbol method,
@@ -90,11 +127,11 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
         String parameters;
         if (includeNames)
         {
-            parameters = String.Join(", ", method.Parameters.Select(parameter => parameter.ToDisplayString()));
+            parameters = String.Join(", ", method.Parameters.Select(TransformParameterForSignatureWithName));
         }
         else
         {
-            parameters = String.Join(", ", method.Parameters.Select(parameter => parameter.Type.ToDisplayString()));
+            parameters = String.Join(", ", method.Parameters.Select(TransformParameterForSignature));
         }
 
         String generics = String.Empty;
@@ -160,7 +197,49 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
             }
         }
 
-        return $"{(method.ReturnsVoid ? "void" : method.ReturnType.ToDisplayString())} {method.Name}{generics}({parameters}){constraint}".Replace("?", "");
+        return $"{(method.ReturnsVoid ? "void" : method.ReturnType.ToDisplayString())} {method.Name}{generics}({parameters}){constraint}";
+    }
+
+    static private String TransformParameterForSignature(IParameterSymbol parameter)
+    {
+        StringBuilder builder = new();
+        if (parameter.RefKind is RefKind.Out)
+        {
+            builder.Append("out ");
+        }
+        else if (parameter.RefKind is RefKind.In)
+        {
+            builder.Append("in ");
+        }
+        else if (parameter.RefKind is RefKind.Ref)
+        {
+            builder.Append("ref ");
+        }
+
+        builder.Append(parameter.Type.ToDisplayString());
+        return builder.ToString();
+    }
+
+    static private String TransformParameterForSignatureWithName(IParameterSymbol parameter)
+    {
+        StringBuilder builder = new();
+        if (parameter.RefKind is RefKind.Out)
+        {
+            builder.Append("out ");
+        }
+        else if (parameter.RefKind is RefKind.In)
+        {
+            builder.Append("in ");
+        }
+        else if (parameter.RefKind is RefKind.Ref)
+        {
+            builder.Append("ref ");
+        }
+
+        builder.Append(parameter.Type.ToDisplayString());
+        builder.Append(' ');
+        builder.Append(parameter.Name);
+        return builder.ToString();
     }
 
     static private String TransformParameterForCall(IParameterSymbol parameter)
