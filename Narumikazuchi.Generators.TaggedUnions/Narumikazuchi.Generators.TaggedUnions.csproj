@@ -36,7 +36,7 @@
 		<DocumentationFile>Narumikazuchi.Generators.TaggedUnions.xml</DocumentationFile>
 		<Authors>Narumikazuchi</Authors>
 		<Copyright>©2023 Narumikazuchi</Copyright>
-		<Version>2023.3.29.1-prerelease</Version>
+		<Version>2023.3.29.6-prerelease</Version>
 	</PropertyGroup>
 
 	<PropertyGroup>
