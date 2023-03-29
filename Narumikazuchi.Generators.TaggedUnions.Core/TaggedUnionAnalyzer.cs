@@ -11,10 +11,7 @@ public sealed partial class TaggedUnionAnalyzer : DiagnosticAnalyzer
         context.EnableConcurrentExecution();
         context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.ReportDiagnostics);
         context.RegisterSyntaxNodeAction(action: this.Analyze,
-                                         SyntaxKind.Attribute/*,
-                                         SyntaxKind.AttributeList,
-                                         SyntaxKind.AttributeArgument,
-                                         SyntaxKind.AttributeArgumentList*/);
+                                         SyntaxKind.Attribute);
     }
 
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = new DiagnosticDescriptor[]
@@ -22,6 +19,8 @@ public sealed partial class TaggedUnionAnalyzer : DiagnosticAnalyzer
         s_TypeIsNullDescriptor,
         s_DuplicateTypeDescriptor,
         s_TypenameIsNullDescriptor,
+        s_TypenameIsEmptyDescriptor,
+        s_TypenameHasWhitespaceDescriptor,
         s_TypenameExistsDescriptor,
         s_UnionExistsDescriptor
     }.ToImmutableArray();

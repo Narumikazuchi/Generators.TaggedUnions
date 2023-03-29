@@ -69,7 +69,13 @@ internal record struct __TaggedUnionParameters(AttributeSyntax? Syntax, String T
             name = (String)typename.Value.Value!;
             if (String.IsNullOrWhiteSpace(name))
             {
-                diagnostics.Add(TaggedUnionAnalyzer.CreateTypenameIsNullDiagnostic(syntax));
+                diagnostics.Add(TaggedUnionAnalyzer.CreateTypenameIsEmptyDiagnostic(syntax));
+                return default;
+            }
+
+            if (name.IndexOf(' ') > -1)
+            {
+                diagnostics.Add(TaggedUnionAnalyzer.CreateTypenameHasWhitespaceDiagnostic(syntax));
                 return default;
             }
         }

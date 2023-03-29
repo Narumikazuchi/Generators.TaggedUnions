@@ -22,6 +22,18 @@ public partial class TaggedUnionAnalyzer
                                  location: attribute.ArgumentList!.Arguments.Last().GetLocation());
     }
 
+    static public Diagnostic CreateTypenameIsEmptyDiagnostic(AttributeSyntax attribute)
+    {
+        return Diagnostic.Create(descriptor: s_TypenameIsEmptyDescriptor,
+                                 location: attribute.ArgumentList!.Arguments.Last().GetLocation());
+    }
+
+    static public Diagnostic CreateTypenameHasWhitespaceDiagnostic(AttributeSyntax attribute)
+    {
+        return Diagnostic.Create(descriptor: s_TypenameHasWhitespaceDescriptor,
+                                 location: attribute.ArgumentList!.Arguments.Last().GetLocation());
+    }
+
     static public Diagnostic CreateTypenameExistsDiagnostic(AttributeSyntax attribute)
     {
         return Diagnostic.Create(descriptor: s_TypenameExistsDescriptor,
@@ -51,20 +63,34 @@ public partial class TaggedUnionAnalyzer
                                                                                  defaultSeverity: DiagnosticSeverity.Error,
                                                                                  isEnabledByDefault: true);
     static private readonly DiagnosticDescriptor s_TypenameIsNullDescriptor = new(id: "NCG003",
-                                                                                 category: "Code Generation",
-                                                                                 title: "Typename is null or empty",
-                                                                                 messageFormat: "A tagged union can not be created with an empty typename or a typename of 'null'.",
-                                                                                 description: "A tagged union can not be created with an empty typename or a typename of 'null'.",
-                                                                                 defaultSeverity: DiagnosticSeverity.Error,
-                                                                                 isEnabledByDefault: true);
-    static private readonly DiagnosticDescriptor s_TypenameExistsDescriptor = new(id: "NCG004",
+                                                                                  category: "Code Generation",
+                                                                                  title: "Typename is null",
+                                                                                  messageFormat: "A tagged union can not be created with a typename of 'null'.",
+                                                                                  description: "A tagged union can not be created with a typename of 'null'.",
+                                                                                  defaultSeverity: DiagnosticSeverity.Error,
+                                                                                  isEnabledByDefault: true);
+    static private readonly DiagnosticDescriptor s_TypenameIsEmptyDescriptor = new(id: "NCG004",
+                                                                                   category: "Code Generation",
+                                                                                   title: "Typename is empty",
+                                                                                   messageFormat: "A tagged union can not be created with an empty typename.",
+                                                                                   description: "A tagged union can not be created with an empty typename.",
+                                                                                   defaultSeverity: DiagnosticSeverity.Error,
+                                                                                   isEnabledByDefault: true);
+    static private readonly DiagnosticDescriptor s_TypenameHasWhitespaceDescriptor = new(id: "NCG005",
+                                                                                         category: "Code Generation",
+                                                                                         title: "Typename has spaces",
+                                                                                         messageFormat: "The typename of a tagged union can not contain spaces.",
+                                                                                         description: "The typename of a tagged union can not contain spaces.",
+                                                                                         defaultSeverity: DiagnosticSeverity.Error,
+                                                                                         isEnabledByDefault: true);
+    static private readonly DiagnosticDescriptor s_TypenameExistsDescriptor = new(id: "NCG006",
                                                                                   category: "Code Generation",
                                                                                   title: "Typename already exists",
                                                                                   messageFormat: "A tagged union can not be created with this typename since another type with that name already exists.",
                                                                                   description: "A tagged union can not be created with this typename since another type with that name already exists.",
                                                                                   defaultSeverity: DiagnosticSeverity.Error,
                                                                                   isEnabledByDefault: true);
-    static private readonly DiagnosticDescriptor s_UnionExistsDescriptor = new(id: "NCG005",
+    static private readonly DiagnosticDescriptor s_UnionExistsDescriptor = new(id: "NCG007",
                                                                                category: "Code Generation",
                                                                                title: "Union already exists",
                                                                                messageFormat: "A tagged union consisting of the specified types already exists as '{0}'.",
