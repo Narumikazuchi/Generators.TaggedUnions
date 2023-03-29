@@ -165,7 +165,7 @@ public partial class TaggedUnionGenerator
                  index++)
             {
                 builder.AppendLine($"                case Tag.Tag_{index}:");
-                builder.AppendLine($"                   return Tag.Tag_{index} => m_{index}{member.ToCallString()};");
+                builder.AppendLine($"                   return m_{index}{member.ToCallString()};");
             }
 
             builder.AppendLine($"                default:");
