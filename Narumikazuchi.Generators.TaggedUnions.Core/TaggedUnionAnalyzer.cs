@@ -38,7 +38,12 @@ public sealed partial class TaggedUnionAnalyzer : DiagnosticAnalyzer
     private void AnalyzeAttribute(SyntaxNodeAnalysisContext context,
                                   AttributeSyntax attribute)
     {
-        IMethodSymbol constructorSymbol = (IMethodSymbol)context.SemanticModel.GetSymbolInfo(attribute).Symbol!;
+        IMethodSymbol? constructorSymbol = (IMethodSymbol?)context.SemanticModel.GetSymbolInfo(attribute).Symbol;
+        if (constructorSymbol is null)
+        {
+            return;
+        }
+
         INamedTypeSymbol attributeSymbol = constructorSymbol.ContainingType;
         String fullName = attributeSymbol.ToDisplayString();
         if (fullName is not Generators.TaggedUnionGenerator.UNION_ATTRIBUTE_FULLNAME)

@@ -135,15 +135,16 @@ public sealed partial class TaggedUnionGenerator
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace Narumikazuchi.Generated;
-
-/// <summary>
-/// A type that can be assigned either of these types: <code>{String.Join(" | ", types.Select(x => $"<see cref=\"{x.ToDisplayString().Replace('<', '{').Replace('>', '}')}\"/>"))}</code>
-/// </summary>
-[CompilerGenerated]
-public readonly struct {name}
+namespace Narumikazuchi.Generated
 {{
+    /// <summary>
+    /// A type that can be assigned either of these types: <code>{String.Join(" | ", types.Select(x => $"<see cref=\"{x.ToDisplayString().Replace('<', '{').Replace('>', '}')}\"/>"))}</code>
+    /// </summary>
+    [CompilerGenerated]
+    public readonly struct {name}
+    {{
 {operators}{methods}{properties}{internals}
+    }}
 }}";
         SourceText text = SourceText.From(text: source,
                                           encoding: Encoding.UTF8);
