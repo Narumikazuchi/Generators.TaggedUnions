@@ -51,7 +51,8 @@ internal readonly struct __PropertySignature : __ISignature, IEquatable<__ISigna
         m_Signature = new(() => GenerateSignatureString(property));
         m_SignatureWithNames = new(() => GenerateSignatureString(property, true));
         this.CanRead = property.IsReadOnly || !property.IsWriteOnly;
-        this.CanWrite = property.IsWriteOnly || !property.IsReadOnly;
+        this.CanWrite = property.ContainingType.IsReferenceType &&
+                        (property.IsWriteOnly || !property.IsReadOnly);
         this.Name = property.Name;
     }
 

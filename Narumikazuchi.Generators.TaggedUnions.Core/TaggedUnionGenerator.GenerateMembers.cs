@@ -54,14 +54,10 @@ public partial class TaggedUnionGenerator
         Int32 index = 1;
         foreach (ITypeSymbol type in types)
         {
-            String typeString;
-            if (type.IsValueType)
+            String typeString = type.ToDisplayString();
+            if (typeString[typeString.Length - 1] != '?')
             {
-                typeString = $"{type.ToDisplayString()}?";
-            }
-            else
-            {
-                typeString = type.ToDisplayString();
+                typeString += "?";
             }
 
             builder.AppendLine($"        public bool Is([NotNullWhen(true)] out {typeString} result)");
