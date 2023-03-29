@@ -85,6 +85,12 @@ internal record struct __TaggedUnionParameters(AttributeSyntax? Syntax, String T
                 diagnostics.Add(TaggedUnionAnalyzer.CreateTypenameHasWhitespaceDiagnostic(syntax));
                 return default;
             }
+
+            if (!name.IsValidCSharpTypename())
+            {
+                diagnostics.Add(TaggedUnionAnalyzer.CreateInvalidTypenameDiagnostic(syntax));
+                return default;
+            }
         }
         else
         {

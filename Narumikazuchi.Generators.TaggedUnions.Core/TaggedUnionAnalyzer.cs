@@ -22,7 +22,8 @@ public sealed partial class TaggedUnionAnalyzer : DiagnosticAnalyzer
         s_TypenameIsEmptyDescriptor,
         s_TypenameHasWhitespaceDescriptor,
         s_TypenameExistsDescriptor,
-        s_UnionExistsDescriptor
+        s_UnionExistsDescriptor,
+        s_InvalidTypenameDescriptor
     }.ToImmutableArray();
 
     private void Analyze(SyntaxNodeAnalysisContext context)

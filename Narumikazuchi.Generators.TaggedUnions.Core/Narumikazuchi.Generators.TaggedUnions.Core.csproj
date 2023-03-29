@@ -53,6 +53,7 @@
 		<Using Include="System.Collections.Generic" />
 		<Using Include="System.Collections.Immutable" />
 		<Using Include="System.Diagnostics" />
+		<Using Include="System.Globalization" />
 		<Using Include="System.Linq" />
 		<Using Include="System.Text" />
 		<Using Include="System.Threading" />

@@ -48,6 +48,12 @@ public partial class TaggedUnionAnalyzer
                                  typename);
     }
 
+    static public Diagnostic CreateInvalidTypenameDiagnostic(AttributeSyntax attribute)
+    {
+        return Diagnostic.Create(descriptor: s_InvalidTypenameDescriptor,
+                                 location: attribute.ArgumentList!.Arguments.Last().GetLocation());
+    }
+
     static private readonly DiagnosticDescriptor s_TypeIsNullDescriptor = new(id: "NCG001",
                                                                               category: "Code Generation",
                                                                               title: "Union of 'null'",
@@ -97,4 +103,11 @@ public partial class TaggedUnionAnalyzer
                                                                                description: "A tagged union consisting of the specified types already exists.",
                                                                                defaultSeverity: DiagnosticSeverity.Error,
                                                                                isEnabledByDefault: true);
+    static private readonly DiagnosticDescriptor s_InvalidTypenameDescriptor = new(id: "NCG008",
+                                                                                   category: "Code Generation",
+                                                                                   title: "Invlaid Typename",
+                                                                                   messageFormat: "This typename is not valid in a C# program. See https://www.ecma-international.org/publications-and-standards/standards/ecma-334/ for more details on how to name types in C#.",
+                                                                                   description: "This typename is not valid in a C# program. See https://www.ecma-international.org/publications-and-standards/standards/ecma-334/ for more details on how to name types in C#.",
+                                                                                   defaultSeverity: DiagnosticSeverity.Error,
+                                                                                   isEnabledByDefault: true);
 }

@@ -1,4 +1,7 @@
-﻿namespace Narumikazuchi.Generators.TaggedUnions.Generators;
+﻿using Microsoft.CodeAnalysis;
+using Narumikazuchi.Generators.TaggedUnions.Analyzers;
+
+namespace Narumikazuchi.Generators.TaggedUnions.Generators;
 
 [Generator]
 public sealed partial class TaggedUnionGenerator
@@ -249,6 +252,20 @@ namespace Narumikazuchi.Generated
             }
 
             name = (String)typename.Value.Value!;
+            if (String.IsNullOrWhiteSpace(name))
+            {
+                emit = false;
+            }
+
+            if (name.IndexOf(' ') > -1)
+            {
+                emit = false;
+            }
+
+            if (!name.IsValidCSharpTypename())
+            {
+                emit = false;
+            }
         }
         else
         {
