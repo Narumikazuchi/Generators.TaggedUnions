@@ -24,17 +24,19 @@
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<None Include="..\Narumikazuchi.Generators.TaggedUnions.Core\bin\Debug\netstandard2.0\Narumikazuchi.Generators.TaggedUnions.Core.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Update="..\Narumikazuchi.Generators.TaggedUnions.Core\tools\*.ps1" CopyToOutputDirectory="Always" Pack="true" PackagePath="tools\%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<None Include="..\Narumikazuchi.Generators.TaggedUnions.Core\bin\Release\netstandard2.0\Narumikazuchi.Generators.TaggedUnions.Core.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Update="..\Narumikazuchi.Generators.TaggedUnions.Core\tools\*.ps1" CopyToOutputDirectory="Always" Pack="true" PackagePath="tools\%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<PropertyGroup>
 		<DocumentationFile>Narumikazuchi.Generators.TaggedUnions.xml</DocumentationFile>
 		<Authors>Narumikazuchi</Authors>
 		<Copyright>©2023 Narumikazuchi</Copyright>
-		<Version>2023.03.28.8-prerelease</Version>
+		<Version>2023.3.29.1-prerelease</Version>
 	</PropertyGroup>
 
 	<PropertyGroup>

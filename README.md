@@ -5,7 +5,7 @@
 The installation can be simply done via installing the nuget package.
 
 # Introduction
-Sometimes we want to handle more than one type at the same time. Maybe we want to return either a ```String``` or an ```Int32``` from a method depending on the input. However unlike Typescript whe Union-Types are a feature of the language, in C# we don't have such a feature.
+Sometimes we want to handle more than one type at the same time. Maybe we want to return either a ```String``` or an ```Int32``` from a method depending on the input. However unlike Typescript where Union-Types are a feature of the language, in C# we don't have such a feature.
 This library aims to fix that. But instead of using generics, like the known ```OneOf``` library does, this library generates types tailored to the use-case for each user.
 
 # How to use
