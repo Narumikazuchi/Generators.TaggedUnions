@@ -1,4 +1,7 @@
-﻿namespace Narumikazuchi.Generators.TaggedUnions;
+﻿using Microsoft.CodeAnalysis;
+using System.Reflection.Metadata;
+
+namespace Narumikazuchi.Generators.TaggedUnions.Generators;
 
 internal readonly struct __PropertySignature : __ISignature, IEquatable<__ISignature>
 {
@@ -14,7 +17,7 @@ internal readonly struct __PropertySignature : __ISignature, IEquatable<__ISigna
                    .GetHashCode();
     }
 
-    public readonly Boolean Equals(__ISignature? other)
+    public readonly Boolean Equals(__ISignature other)
     {
         if (other is null)
         {
@@ -67,7 +70,7 @@ internal readonly struct __PropertySignature : __ISignature, IEquatable<__ISigna
         String parameters = String.Empty;
         if (!property.Parameters.IsDefaultOrEmpty)
         {
-            parameters = $"[{String.Join(", ", property.Parameters.Select(x => x.Name))}]";
+            parameters = $"[{String.Join(", ", property.Parameters.Select(parameter => parameter.Name))}]";
             builder.Append(parameters);
         }
         else
@@ -88,15 +91,15 @@ internal readonly struct __PropertySignature : __ISignature, IEquatable<__ISigna
         {
             if (includeNames)
             {
-                parameters = $"[{String.Join(", ", property.Parameters.Select(x => x.ToDisplayString()))}]";
+                parameters = $"[{String.Join(", ", property.Parameters.Select(parameter => parameter.ToDisplayString()))}]";
             }
             else
             {
-                parameters = $"[{String.Join(", ", property.Parameters.Select(x => x.Type.ToDisplayString()))}]";
+                parameters = $"[{String.Join(", ", property.Parameters.Select(parameter => parameter.Type.ToFrameworkString()))}]";
             }
         }
 
-        builder.Append($"{property.Type.ToDisplayString()} {property.Name.Replace("[", "").Replace("]", "")}{parameters}");
+        builder.Append($"{property.Type.ToFrameworkString()} {property.Name.Replace("[", "").Replace("]", "")}{parameters}");
         if (!includeNames)
         {
             builder.Append(" { ");

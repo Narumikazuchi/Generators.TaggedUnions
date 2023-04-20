@@ -1,13 +1,15 @@
-﻿namespace Narumikazuchi.Generators.TaggedUnions.Analyzers;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
+
+namespace Narumikazuchi.Generators.TaggedUnions.Analyzers;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public sealed partial class TaggedUnionAnalyzer : DiagnosticAnalyzer
 {
     public override void Initialize(AnalysisContext context)
     {
-        m_Marked.Clear();
-        m_TaggedUnions.Clear();
-
         context.EnableConcurrentExecution();
         context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.ReportDiagnostics);
         context.RegisterSyntaxNodeAction(action: this.Analyze,
@@ -38,7 +40,7 @@ public sealed partial class TaggedUnionAnalyzer : DiagnosticAnalyzer
     private void AnalyzeAttribute(SyntaxNodeAnalysisContext context,
                                   AttributeSyntax attribute)
     {
-        IMethodSymbol? constructorSymbol = (IMethodSymbol?)context.SemanticModel.GetSymbolInfo(attribute).Symbol;
+        IMethodSymbol constructorSymbol = (IMethodSymbol)context.SemanticModel.GetSymbolInfo(attribute).Symbol;
         if (constructorSymbol is null)
         {
             return;
@@ -54,8 +56,8 @@ public sealed partial class TaggedUnionAnalyzer : DiagnosticAnalyzer
         SemanticModel semanticModel = context.SemanticModel;
         SyntaxReference reference = attribute.GetReference();
         AttributeData data = context.Compilation.Assembly.GetAttributes()
-                                                         .Single(x => reference.SyntaxTree == x.ApplicationSyntaxReference?.SyntaxTree &&
-                                                                      reference.Span == x.ApplicationSyntaxReference?.Span);
+                                                         .Single(data => reference.SyntaxTree == data.ApplicationSyntaxReference?.SyntaxTree &&
+                                                                         reference.Span == data.ApplicationSyntaxReference?.Span);
 
         ImmutableArray<AttributeData> otherDeclarations = context.Compilation.Assembly.GetAttributes()
                                                                                       .Where(data => data.AttributeClass is not null &&
@@ -127,7 +129,4 @@ public sealed partial class TaggedUnionAnalyzer : DiagnosticAnalyzer
                                .Any();
         }
     }
-
-    private readonly List<String> m_Marked = new();
-    private readonly List<__TaggedUnionParameters> m_TaggedUnions = new();
 }

@@ -1,4 +1,6 @@
-﻿namespace Narumikazuchi.Generators.TaggedUnions;
+﻿using Microsoft.CodeAnalysis;
+
+namespace Narumikazuchi.Generators.TaggedUnions.Generators;
 
 internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignature>
 {
@@ -19,7 +21,7 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
         return m_Signature.Value;
     }
 
-    public readonly Boolean Equals(__ISignature? other)
+    public readonly Boolean Equals(__ISignature other)
     {
         if (other is null)
         {
@@ -54,8 +56,8 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
         {
             return new(name: "Equals",
                        call: "Equals(obj)",
-                       signature: "bool Equals(object?)",
-                       signatureWithNames: "bool Equals(object? obj)",
+                       signature: "Boolean Equals(Object?)",
+                       signatureWithNames: "Boolean Equals(Object? obj)",
                        returnsVoid: false);
         }
     }
@@ -66,8 +68,8 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
         {
             return new(name: "GetHashCode",
                        call: "GetHashCode()",
-                       signature: "int GetHashCode()",
-                       signatureWithNames: "int GetHashCode()",
+                       signature: "Int32 GetHashCode()",
+                       signatureWithNames: "Int32 GetHashCode()",
                        returnsVoid: false);
         }
     }
@@ -78,8 +80,8 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
         {
             return new(name: "ToString",
                        call: "ToString()",
-                       signature: "string ToString()",
-                       signatureWithNames: "string ToString()",
+                       signature: "String ToString()",
+                       signatureWithNames: "String ToString()",
                        returnsVoid: false);
         }
     }
@@ -138,32 +140,32 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
         String constraint = String.Empty;
         if (method.IsGenericMethod)
         {
-            generics = $"<{String.Join(", ", method.TypeParameters.Select(x => x.ToDisplayString()))}>";
+            generics = $"<{String.Join(", ", method.TypeParameters.Select(parameter => parameter.ToFrameworkString()))}>";
             foreach (ITypeParameterSymbol argument in method.TypeArguments.OfType<ITypeParameterSymbol>())
             {
                 Boolean anySpecial = false;
                 Boolean any = false;
                 if (argument.HasNotNullConstraint)
                 {
-                    constraint += $"\r\n\t\twhere {argument.ToDisplayString()} : notnull";
+                    constraint += $"\r\n\t\twhere {argument.ToFrameworkString()} : notnull";
                     anySpecial = true;
                     any = true;
                 }
                 else if (argument.HasReferenceTypeConstraint)
                 {
-                    constraint += $"\r\n\t\twhere {argument.ToDisplayString()} : class";
+                    constraint += $"\r\n\t\twhere {argument.ToFrameworkString()} : class";
                     anySpecial = true;
                     any = true;
                 }
                 else if (argument.HasUnmanagedTypeConstraint)
                 {
-                    constraint += $"\r\n\t\twhere {argument.ToDisplayString()} : unmanaged";
+                    constraint += $"\r\n\t\twhere {argument.ToFrameworkString()} : unmanaged";
                     anySpecial = true;
                     any = true;
                 }
                 else if (argument.HasValueTypeConstraint)
                 {
-                    constraint += $"\r\n\t\twhere {argument.ToDisplayString()} : struct";
+                    constraint += $"\r\n\t\twhere {argument.ToFrameworkString()} : struct";
                     anySpecial = true;
                     any = true;
                 }
@@ -176,10 +178,10 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
                     }
                     else
                     {
-                        constraint += $"\r\n\t\twhere {argument.ToDisplayString()} : ";
+                        constraint += $"\r\n\t\twhere {argument.ToFrameworkString()} : ";
                     }
 
-                    constraint += $"{String.Join(", ", argument.ConstraintTypes.Select(x => x.ToDisplayString()))}";
+                    constraint += $"{String.Join(", ", argument.ConstraintTypes.Select(type => type.ToFrameworkString()))}";
                     any = true;
                 }
 
@@ -191,13 +193,13 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
                     }
                     else
                     {
-                        constraint += $"\r\n\t\twhere {argument.ToDisplayString()} : new()";
+                        constraint += $"\r\n\t\twhere {argument.ToFrameworkString()} : new()";
                     }
                 }
             }
         }
 
-        return $"{(method.ReturnsVoid ? "void" : method.ReturnType.ToDisplayString())} {method.Name}{generics}({parameters}){constraint}";
+        return $"{(method.ReturnsVoid ? "void" : method.ReturnType.ToFrameworkString())} {method.Name}{generics}({parameters}){constraint}";
     }
 
     static private String TransformParameterForSignature(IParameterSymbol parameter)
@@ -216,7 +218,7 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
             builder.Append("ref ");
         }
 
-        builder.Append(parameter.Type.ToDisplayString());
+        builder.Append(parameter.Type.ToFrameworkString());
         return builder.ToString();
     }
 
@@ -236,7 +238,7 @@ internal readonly struct __MethodSignature : __ISignature, IEquatable<__ISignatu
             builder.Append("ref ");
         }
 
-        builder.Append(parameter.Type.ToDisplayString());
+        builder.Append(parameter.Type.ToFrameworkString());
         builder.Append(' ');
         builder.Append(parameter.Name);
         return builder.ToString();

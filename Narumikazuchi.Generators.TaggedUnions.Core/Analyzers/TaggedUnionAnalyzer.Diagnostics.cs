@@ -1,4 +1,7 @@
-﻿namespace Narumikazuchi.Generators.TaggedUnions.Analyzers;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace Narumikazuchi.Generators.TaggedUnions.Analyzers;
 
 public partial class TaggedUnionAnalyzer
 {
@@ -105,7 +108,7 @@ public partial class TaggedUnionAnalyzer
                                                                                isEnabledByDefault: true);
     static private readonly DiagnosticDescriptor s_InvalidTypenameDescriptor = new(id: "NCG008",
                                                                                    category: "Code Generation",
-                                                                                   title: "Invlaid Typename",
+                                                                                   title: "Invalid Typename",
                                                                                    messageFormat: "This typename is not valid in a C# program. See https://www.ecma-international.org/publications-and-standards/standards/ecma-334/ for more details on how to name types in C#.",
                                                                                    description: "This typename is not valid in a C# program. See https://www.ecma-international.org/publications-and-standards/standards/ecma-334/ for more details on how to name types in C#.",
                                                                                    defaultSeverity: DiagnosticSeverity.Error,

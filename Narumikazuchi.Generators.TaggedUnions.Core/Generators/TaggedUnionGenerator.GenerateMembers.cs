@@ -1,4 +1,7 @@
-﻿namespace Narumikazuchi.Generators.TaggedUnions.Generators;
+﻿using Microsoft.CodeAnalysis;
+using System.Reflection;
+
+namespace Narumikazuchi.Generators.TaggedUnions.Generators;
 
 public partial class TaggedUnionGenerator
 {
@@ -20,12 +23,13 @@ public partial class TaggedUnionGenerator
                                          String name,
                                          ITypeSymbol type)
     {
-        builder.AppendLine($"        static public implicit operator {name}({type.ToDisplayString()} value)");
+        String typeString = type.ToFrameworkString();
+        builder.AppendLine($"        static public implicit operator {name}({typeString} value)");
         builder.AppendLine("        {");
         builder.AppendLine($"            return new {name}(value);");
         builder.AppendLine("        }");
         builder.AppendLine();
-        builder.AppendLine($"        static public {name} operator |({name} first, {type.ToDisplayString()} second)");
+        builder.AppendLine($"        static public {name} operator |({name} first, {typeString} second)");
         builder.AppendLine("        {");
         builder.AppendLine($"            if (first.m_Tag == Tag.Uninitialized)");
         builder.AppendLine("            {");
@@ -34,6 +38,23 @@ public partial class TaggedUnionGenerator
         builder.AppendLine("            else");
         builder.AppendLine("            {");
         builder.AppendLine("                return first;");
+        builder.AppendLine("            }");
+        builder.AppendLine("        }");
+        builder.AppendLine();
+
+        if (typeString[typeString.Length - 1] != '?')
+        {
+            typeString += "?";
+        }
+        builder.AppendLine($"        static public explicit operator {typeString}({name} source)");
+        builder.AppendLine("        {");
+        builder.AppendLine($"            if (source.Is(out {typeString} result))");
+        builder.AppendLine("            {");
+        builder.AppendLine("                return result;");
+        builder.AppendLine("            }");
+        builder.AppendLine("            else");
+        builder.AppendLine("            {");
+        builder.AppendLine("                return default;");
         builder.AppendLine("            }");
         builder.AppendLine("        }");
         builder.AppendLine();
@@ -54,7 +75,7 @@ public partial class TaggedUnionGenerator
         Int32 index = 1;
         foreach (ITypeSymbol type in types)
         {
-            String typeString = type.ToDisplayString();
+            String typeString = type.ToFrameworkString();
             if (typeString[typeString.Length - 1] != '?')
             {
                 typeString += "?";
@@ -206,14 +227,14 @@ public partial class TaggedUnionGenerator
         Int32 index = 1;
         foreach (ITypeSymbol type in types)
         {
-            constructors.AppendLine($"        private {name}({type.ToDisplayString()} value) : this()");
+            constructors.AppendLine($"        private {name}({type.ToFrameworkString()} value) : this()");
             constructors.AppendLine("        {");
             constructors.AppendLine($"            m_{index} = value;");
             constructors.AppendLine($"            m_Tag = Tag.Tag_{index};");
             constructors.AppendLine("        }");
             constructors.AppendLine();
 
-            fields.AppendLine($"        private readonly {type.ToDisplayString()} m_{index};");
+            fields.AppendLine($"        private readonly {type.ToFrameworkString()} m_{index};");
 
             tags.AppendLine($"            Tag_{index},");
             index++;

@@ -1,8 +1,10 @@
-﻿using Narumikazuchi.Generators.TaggedUnions.Analyzers;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Narumikazuchi.Generators.TaggedUnions.Analyzers;
 
 namespace Narumikazuchi.Generators.TaggedUnions;
 
-internal record struct __TaggedUnionParameters(AttributeSyntax? Syntax, String Typename, HashSet<ITypeSymbol> Types)
+internal record struct __TaggedUnionParameters(AttributeSyntax Syntax, String Typename, HashSet<ITypeSymbol> Types)
 {
     internal static __TaggedUnionParameters FromAttributeData(AttributeSyntax syntax,
                                                               AttributeData data,

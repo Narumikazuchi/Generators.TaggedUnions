@@ -1,4 +1,7 @@
-﻿namespace Narumikazuchi.Generators.TaggedUnions.Generators;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace Narumikazuchi.Generators.TaggedUnions.Generators;
 
 public partial class TaggedUnionGenerator : IIncrementalGenerator
 {
@@ -10,6 +13,6 @@ public partial class TaggedUnionGenerator : IIncrementalGenerator
 
         IncrementalValueProvider<(Compilation, ImmutableArray<AttributeSyntax[]>)> compilationAndAttributes = context.CompilationProvider.Combine(attributes.Collect());
         context.RegisterSourceOutput(source: compilationAndAttributes,
-                                     action: this.GenerateStructs);
+                                     action: GenerateUnions);
     }
 }

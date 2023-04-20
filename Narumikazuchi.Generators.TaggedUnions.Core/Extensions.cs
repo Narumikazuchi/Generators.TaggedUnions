@@ -1,7 +1,28 @@
-﻿namespace Narumikazuchi.Generators.TaggedUnions;
+﻿using Microsoft.CodeAnalysis;
+
+namespace Narumikazuchi.Generators.TaggedUnions;
 
 static public class Extensions
 {
+    static public String ToFrameworkString(this ITypeSymbol type)
+    {
+        String result = type.ToDisplayString()
+                            .Replace("*", "");
+
+        foreach (KeyValuePair<String, String> kv in s_BuiltInTypes)
+        {
+            result = result.Replace(kv.Key, kv.Value);
+        }
+
+        if (type.ContainingNamespace is not null &&
+            type.ContainingNamespace.Name is "System")
+        {
+            result = result.Replace("System.", "");
+        }
+
+        return result;
+    }
+
     static public Boolean IsValidCSharpTypename(this String value)
     {
         UnicodeCategory category = Char.GetUnicodeCategory(value[0]);
@@ -36,4 +57,25 @@ static public class Extensions
 
         return true;
     }
+
+    static private readonly Dictionary<String, String> s_BuiltInTypes = new()
+    {
+        { "decimal", "Decimal" },
+        { "double", "Double" },
+        { "ushort", "UInt16" },
+        { "object", "Object" },
+        { "string", "String" },
+        { "float", "Single" },
+        { "sbyte", "SByte" },
+        { "nuint", "UIntPtr" },
+        { "ulong", "UInt64" },
+        { "short", "Int16" },
+        { "bool", "Boolean" },
+        { "long", "Int64" },
+        { "nint", "IntPtr" },
+        { "uint", "UInt32" },
+        { "byte", "Byte" },
+        { "char", "Char" },
+        { "int", "Int32" },
+    };
 }
