@@ -23,7 +23,7 @@ public sealed class AnalyzerTester : CSharpAnalyzerTest<TaggedUnionAnalyzer, MST
             TestState =
             {
                 Sources = { source },
-                AdditionalReferences = { typeof(UnionOfAttribute).Assembly.Location.Replace("net6.0", "netstandard2.0") }
+                AdditionalReferences = { typeof(UnionOfAttribute).Assembly.Location }
             }
         };
 
