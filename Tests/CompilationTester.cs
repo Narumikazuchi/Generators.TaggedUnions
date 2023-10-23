@@ -10,7 +10,7 @@ static public class CompilationTester
         s_CompilationOptions = new(OutputKind.DynamicallyLinkedLibrary,
                                    optimizationLevel: OptimizationLevel.Release,
                                    platform: Platform.X64,
-                                   specificDiagnosticOptions: new Dictionary<String, ReportDiagnostic()
+                                   specificDiagnosticOptions: new Dictionary<String, ReportDiagnostic>()
                                    {
                                        { "CS8012", ReportDiagnostic.Suppress }
                                    });
