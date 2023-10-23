@@ -9,12 +9,16 @@ static public class CompilationTester
         s_ParseOptions = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Latest);
         s_CompilationOptions = new(OutputKind.DynamicallyLinkedLibrary,
                                    optimizationLevel: OptimizationLevel.Release,
-                                   platform: Platform.X64);
+                                   platform: Platform.X64,
+                                   specificDiagnosticOptions: new Dictionary<String, ReportDiagnostic()
+                                   {
+                                       { "CS8012", ReportDiagnostic.Suppress }
+                                   });
 
         List<String> fileLocations = new()
         {
             typeof(Object).Assembly.Location,
-            Path.GetDirectoryName(typeof(Console).Assembly.Location),
+            Path.Join(Path.GetDirectoryName(typeof(Object).Assembly.Location), "System.Console.dll"),
             Path.Join(Path.GetDirectoryName(typeof(Object).Assembly.Location), "System.Runtime.dll"),
             typeof(UnionOfAttribute).Assembly.Location
         };
