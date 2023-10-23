@@ -18,9 +18,11 @@
 		<NoWarn>NU1803;CS8785</NoWarn>
 	</PropertyGroup>
 
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)Solution.sln&quot; /Build $(Configuration) /Project &quot;$(SolutionDir)Narumikazuchi.Generators.TaggedUnions.Core\Narumikazuchi.Generators.TaggedUnions.Core.csproj&quot;" />
-	</Target>
+	<ItemGroup>
+		<ProjectReference Include="..\Narumikazuchi.Generators.TaggedUnions.Core\Narumikazuchi.Generators.TaggedUnions.Core.csproj">
+			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+		</ProjectReference>
+	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<None Include="..\Narumikazuchi.Generators.TaggedUnions.Core\bin\Debug\netstandard2.0\Narumikazuchi.Generators.TaggedUnions.Core.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
