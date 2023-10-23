@@ -14,17 +14,10 @@ static public class CompilationTester
         List<String> fileLocations = new()
         {
             typeof(Object).Assembly.Location,
+            Path.Join(Path.GetDirectoryName(typeof(Object).Assembly.Location), "System.Console.dll"),
             Path.Join(Path.GetDirectoryName(typeof(Object).Assembly.Location), "System.Runtime.dll"),
             typeof(UnionOfAttribute).Assembly.Location
         };
-        if (OperatingSystem.IsWindows())
-        {
-            fileLocations.Add(Path.Join(Path.GetDirectoryName(typeof(Object).Assembly.Location), "System.Console.dll"));
-        }
-        else
-        {
-            fileLocations.Add(Path.Join(Path.GetDirectoryName(typeof(Object).Assembly.Location), "System.Core.dll"));
-        }
 
         s_MetadataReferences = fileLocations.Select(location => MetadataReference.CreateFromFile(location))
                                             .ToImmutableArray<MetadataReference>();
