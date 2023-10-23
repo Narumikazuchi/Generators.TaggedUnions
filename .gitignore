@@ -364,5 +364,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+# Launch Settings
+launchSettings.json
+
 # Godot 4+ specific ignores
 .godot/
