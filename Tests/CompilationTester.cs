@@ -21,6 +21,10 @@ static public class CompilationTester
         {
             fileLocations.Add(Path.Join(Path.GetDirectoryName(typeof(Object).Assembly.Location), "System.Console.dll"));
         }
+        else
+        {
+            fileLocations.Add(Path.Join(Path.GetDirectoryName(typeof(Object).Assembly.Location), "System.Core.dll"));
+        }
 
         s_MetadataReferences = fileLocations.Select(location => MetadataReference.CreateFromFile(location))
                                             .ToImmutableArray<MetadataReference>();
