@@ -104,7 +104,7 @@ internal record struct __TaggedUnionParameters(AttributeSyntax Syntax, String Ty
                    Types: types);
     }
 
-    internal Boolean ContentsEqual(__TaggedUnionParameters other)
+    internal readonly Boolean ContentsEqual(__TaggedUnionParameters other)
     {
         if (this.Types.Count != other.Types.Count)
         {

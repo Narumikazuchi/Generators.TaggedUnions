@@ -53,7 +53,7 @@ static public class Runner
                                                    .WithOptions(s_CompilationOptions)
                                                    .AddReferences(s_MetadataReferences)
                                                    .AddSyntaxTrees(syntaxTrees);
-        _ = driver.RunGeneratorsAndUpdateCompilation(compilation, out compilation, out var xd);
+        _ = driver.RunGeneratorsAndUpdateCompilation(compilation, out compilation, out _);
 
         using MemoryStream stream = new();
         EmitResult result = compilation.Emit(stream);

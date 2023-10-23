@@ -23,11 +23,26 @@ public sealed class AnalyzerTester : CSharpAnalyzerTest<TaggedUnionAnalyzer, MST
             TestState =
             {
                 Sources = { source },
-                AdditionalReferences = { typeof(UnionOfAttribute).Assembly.Location }
+#if NET6_0
+                ReferenceAssemblies = ReferenceAssemblies.Net.Net60,
+#elif NET7_0
+                ReferenceAssemblies = s_Net7Assemblies,
+#endif
+                AdditionalReferences =
+                {
+                    typeof(UnionOfAttribute).Assembly.Location
+                }
             }
         };
 
         test.ExpectedDiagnostics.AddRange(expected);
         await test.RunAsync(CancellationToken.None);
     }
+
+#if NET7_0
+    static private readonly ReferenceAssemblies s_Net7Assemblies = new("net7.0",
+                                                                       new PackageIdentity("Microsoft.NETCore.App.Ref",
+                                                                                           "7.0.4"),
+                                                                       Path.Combine("ref", "net7.0"));
+#endif
 }
