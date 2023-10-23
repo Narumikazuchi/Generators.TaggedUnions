@@ -36,7 +36,7 @@
 	<PropertyGroup>
 		<Authors>Narumikazuchi</Authors>
 		<Copyright>©2023 Narumikazuchi</Copyright>
-		<Version>2023.4.20.1-prerelease</Version>
+		<Version>2023.10.23.1-prerelease</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
