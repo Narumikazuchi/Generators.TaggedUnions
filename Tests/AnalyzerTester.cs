@@ -1,11 +1,9 @@
 ﻿using Narumikazuchi.Generators.TaggedUnions;
 using Narumikazuchi.Generators.TaggedUnions.Analyzers;
 
-namespace Tests;
-
-public sealed class AnalyzerTest : CSharpAnalyzerTest<TaggedUnionAnalyzer, MSTestVerifier>
+public sealed class AnalyzerTester : CSharpAnalyzerTest<TaggedUnionAnalyzer, MSTestVerifier>
 {
-    public AnalyzerTest()
+    public AnalyzerTester()
     {
         this.SolutionTransforms.Add((solution, projectId) =>
         {
@@ -20,7 +18,7 @@ public sealed class AnalyzerTest : CSharpAnalyzerTest<TaggedUnionAnalyzer, MSTes
     static public async Task VerifyAnalyzerAsynchronously(String source,
                                                           params DiagnosticResult[] expected)
     {
-        AnalyzerTest test = new()
+        AnalyzerTester test = new()
         {
             TestState =
             {

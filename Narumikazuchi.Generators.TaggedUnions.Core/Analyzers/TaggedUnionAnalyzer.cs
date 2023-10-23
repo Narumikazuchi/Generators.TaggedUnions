@@ -118,6 +118,16 @@ public sealed partial class TaggedUnionAnalyzer : DiagnosticAnalyzer
     static private Boolean TypesListsAreEqual(__TaggedUnionParameters left,
                                               __TaggedUnionParameters right)
     {
+        if (left.Types is null)
+        {
+            return right.Types is null;
+        }
+
+        if (right.Types is null)
+        {
+            return false;
+        }
+
         if (left.Types.Count > right.Types.Count)
         {
             return !left.Types.Except(right.Types)

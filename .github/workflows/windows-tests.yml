@@ -1,0 +1,29 @@
+name: windows tests
+
+on: [push]
+
+jobs:
+  tests:
+
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '6.0.x', '7.0.x' ]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build
+      - name: Test
+        run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: dotnet-results-${{ matrix.dotnet-version }}
+          path: TestResults-${{ matrix.dotnet-version }}
